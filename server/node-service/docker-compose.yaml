@@ -1,0 +1,25 @@
+version: "3"
+services:
+
+  lowcoder-node-service:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    # image: lowcoderorg/lowcoder-ce-node-service:latest
+    container_name: lowcoder-node-service
+    # Enabled ports to be able to access backend from host
+    # ports:
+    #   - "6060:6060"
+    environment:
+      LOWCODER_PUID: "9001"
+      LOWCODER_PGID: "9001"
+      LOWCODER_API_SERVICE_URL: "http://lowcoder-api-service:8080"
+      NODE_ENV: production
+    restart: unless-stopped
+    volumes:
+      - node-service:/lowcoder/node-service
+
+
+volumes:
+  node-service:
+   driver: local
